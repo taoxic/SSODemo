@@ -15,7 +15,7 @@ import java.util.Map;
 @RestController
 public class AuthenticationController {
 
-    private static final String RETURN_TO = "https://taoxic.sandbox.kefu.easemob.com/v1/access/jwt";
+    private static final String RETURN_TO = "https://taoxic.kefu.easemob.com/v1/access/jwt";
 
     @Autowired
     private AuthenticationService authenticationService;
@@ -25,7 +25,7 @@ public class AuthenticationController {
     public void login(HttpServletResponse response, LoginCommand loginCommand) throws IOException {
         Map<String, String> result = authenticationService.login(loginCommand);
         if ("success".equals(result.get("result"))) {
-            response.sendRedirect(RETURN_TO + "?jwt=" + result.get("jwt") + "&returnTo=https://taoxic.sandbox.kefu.easemob.com/mo/agent/webapp/chat");
+            response.sendRedirect(RETURN_TO + "?jwt=" + result.get("jwt") + "&returnTo=https://taoxic.kefu.easemob.com/mo/agent/webapp/chat");
         }
     }
 }
