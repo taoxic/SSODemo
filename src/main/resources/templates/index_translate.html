@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>Taoxic SSO</title>
+    <meta name="description" content="A translate demo"/>
+    <script src="http://code.jquery.com/jquery-latest.js"></script>
+</head>
+<body>
+<div>
+    <div>
+        <form>
+            <table class="t1" width="481" height="370" border="0" style="background-color:#FFF">
+                <tr height="80px" style="background-color:#ff6a00">
+                    <td colspan="3" align="center" style="font-weight:bold"><font size="+5"
+                                                                                  face="Verdana, Geneva, sans-serif"
+                                                                                  color="#FFFFFF">千与千寻翻译器</font>
+                    </td>
+                </tr>
+                <tr>
+                    <td height="50">&nbsp;</td>
+                </tr>
+                <tr align="left">
+                    <td width="75" height="50">&nbsp;</td>
+                    <td align="left">
+                        <p style="font-size: 20px;">输入参数</p>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td width="75" height="35">&nbsp;</td>
+                    <td>
+                        <label style="color:#ff6a00">* </label>
+                        <label>接口地址</label>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="75" height="35">&nbsp;</td>
+                    <td><input id="address" name="add" type="text" size="50" placeholder=" 请输入接口地址"
+                               style="border:1;color:#000;background-color:transparent;"/></td>
+                </tr>
+                <tr>
+                    <td width="75" height="35">&nbsp;</td>
+                    <td>
+                        <label style="color:#ff6a00">* </label>
+                        <label>API-KEY</label>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="75" height="35">&nbsp;</td>
+                    <td><input id="apikey" name="key" type="text" size="50" placeholder=" 请输入KEY"
+                               style="border:1;color:#000;background-color:transparent;"/></td>
+                </tr>
+
+                <tr>
+                    <td width="75" height="35">&nbsp;</td>
+                    <td>
+                        <label style="color:#ff6a00">* </label>
+                        <label>TargetLanguage 译文语言</label>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="75" height="35">&nbsp;</td>
+                    <td><input id="TargetLanguage" name="targetL" type="text" size="50" placeholder=" 请输入字符串"
+                               style="border:1;color:#000;background-color:transparent;"/></td>
+                </tr>
+
+                <tr>
+                    <td width="75" height="35">&nbsp;</td>
+                    <td>
+                        <label style="color:#ff6a00">* </label>
+                        <label>SourceText 需要翻译的内容</label>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="75" height="35">&nbsp;</td>
+                    <td><input id="SourceText" name="sourceT" type="text" size="50" placeholder=" 请输入字符串"
+                               style="border:1;color:#000;background-color:transparent;"/></td>
+                </tr>
+
+                <tr>
+                    <td width="75" height="35">&nbsp;</td>
+                    <td>
+                        <label style="color:#ff6a00">* </label>
+                        <label>prompt 翻译指令</label>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="75" height="35">&nbsp;</td>
+                    <td><input id="prompt" name="prompt" type="text" size="50" placeholder=" 请输入指令"
+                               style="border:1;color:#000;background-color:transparent;"/></td>
+                </tr>
+
+                <tr>
+                    <td>&nbsp;</td>
+                    <td height="80">
+                        <table>
+                            <tr>
+                                <td align="left">
+                                    <button type="button" onclick="clearContent()"
+                                            style="color:#181818;font-size:16px;background:#FFF; width:120px; height:40px">
+                                        清 空
+                                    </button>
+                                </td>
+                                <td width="95">&nbsp;</td>
+                                <td align="right">
+                                    <button type="button" onclick="submitForm()"
+                                            style="color:#FFF;font-size:16px;background:#ff6a00; width:120px; height:40px">
+                                        发起调用
+                                    </button>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="75" height="50">&nbsp;</td>
+                    <td>
+                        <label>翻译结果</label>
+                    </td>
+                </tr>
+                <tr>
+                    <td height="80">&nbsp;</td>
+                    <td>
+                        <textarea maxlength="10000" id="translate_result" class="translation" rows="6"
+                                  style="width: 338px; margin-top: 2px; text-align: left;"></textarea>
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+</div>
+<script>
+    function clearContent() {
+        document.getElementById("address").value = "";
+        document.getElementById("apikey").value = "";
+        document.getElementById("TargetLanguage").value = "";
+        document.getElementById("SourceText").value = "";
+        document.getElementById("prompt").value = "";
+        console.log("clearContent");
+    }
+
+    function submitForm() {
+        var formData = new FormData();
+        formData.append("address", document.getElementById("address").value);
+        formData.append("apikey", document.getElementById("apikey").value);
+        formData.append("targetLanguage", document.getElementById("TargetLanguage").value);
+        formData.append("sourceText", document.getElementById("SourceText").value);
+        formData.append("prompt", document.getElementById("prompt").value);
+        $.ajax({
+            url: "http://localhost:8081/v1/translate",
+            type: "POST",
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function (data) {
+                console.log(data);
+                var jsonData = JSON.parse(data);
+                document.getElementById("translate_result").value = jsonData["data"]["translateText"];
+            },
+            error: function (data) {
+                console.log(data);
+            }
+        });
+        console.log("submitForm");
+    }
+</script>
+</body>
+</html>

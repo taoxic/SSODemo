@@ -6,12 +6,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-public class SSOController {
+public class BaseController {
 
-    @RequestMapping(value = "/taoxic/sso", method = RequestMethod.GET)
-    public ModelAndView jumpUrlScheme(){
+    @RequestMapping(value = "/taoxic/translate", method = RequestMethod.GET)
+    public ModelAndView translate(){
         ModelAndView mav = new ModelAndView();
-        mav.setViewName("index");
+        mav.setViewName("index_translate");
         return mav;
     }
 }
