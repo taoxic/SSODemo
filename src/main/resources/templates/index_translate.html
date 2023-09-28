@@ -14,7 +14,7 @@
                 <tr height="80px" style="background-color:#ff6a00">
                     <td colspan="3" align="center" style="font-weight:bold"><font size="+5"
                                                                                   face="Verdana, Geneva, sans-serif"
-                                                                                  color="#FFFFFF">千与千寻翻译</font>
+                                                                                  color="#FFFFFF">通义千问翻译</font>
                     </td>
                 </tr>
                 <tr>
@@ -181,12 +181,12 @@
             processData: false,
             contentType: false,
             success: function (data) {
-                console.log(data);
-                var jsonData = JSON.parse(data);
-                document.getElementById("translate_result").value = jsonData["data"]["translateText"];
+                console.log("success:"+data);
+                // var jsonData = JSON.parse(data);
+                document.getElementById("translate_result").value = data;
             },
             error: function (data) {
-                console.log(data);
+                console.log("error:"+data);
             }
         });
         console.log("submitForm");
