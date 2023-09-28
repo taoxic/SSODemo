@@ -8,7 +8,7 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class BaseController {
 
-    @RequestMapping(value = "/taoxic/translate", method = RequestMethod.GET)
+    @RequestMapping(value = "/qwen/translate", method = RequestMethod.GET)
     public ModelAndView translate(){
         ModelAndView mav = new ModelAndView();
         mav.setViewName("index_translate");
