@@ -14,7 +14,7 @@
                 <tr height="80px" style="background-color:#ff6a00">
                     <td colspan="3" align="center" style="font-weight:bold"><font size="+5"
                                                                                   face="Verdana, Geneva, sans-serif"
-                                                                                  color="#FFFFFF">千与千寻翻译器</font>
+                                                                                  color="#FFFFFF">千与千寻翻译</font>
                     </td>
                 </tr>
                 <tr>
@@ -25,6 +25,11 @@
                     <td align="left">
                         <p style="font-size: 20px;">输入参数</p>
                     </td>
+                </tr>
+
+                <tr>
+                    <td>&nbsp;</td>
+                    <td colspan="2"><div style=" font-size:-1px; display:block; color:#F00;"><p  id="login_error">&nbsp;</p></div></td>
                 </tr>
 
                 <tr>
@@ -141,6 +146,28 @@
     }
 
     function submitForm() {
+        var address = document.getElementById("address").value;
+        var apikey = document.getElementById("apikey").value;
+        var targetLanguage = document.getElementById("TargetLanguage").value;
+        var sourceText = document.getElementById("SourceText").value;
+        var prompt = document.getElementById("prompt").value;
+        if (isEmpty(address)) {
+            document.getElementById("login_error").innerHTML = "please input address";
+            return;
+        } else if (isEmpty(apikey)) {
+            document.getElementById("login_error").innerHTML = "please input apikey";
+            return;
+        } else if (isEmpty(targetLanguage)) {
+            document.getElementById("login_error").innerHTML = "please input targetLanguage";
+            return;
+        } else if (isEmpty(sourceText)) {
+            document.getElementById("login_error").innerHTML = "please input sourceText";
+            return;
+        } else if (isEmpty(prompt)) {
+            document.getElementById("login_error").innerHTML = "please input prompt";
+            return;
+        }
+        document.getElementById("login_error").style.display = "none";
         var formData = new FormData();
         formData.append("address", document.getElementById("address").value);
         formData.append("apikey", document.getElementById("apikey").value);
@@ -163,6 +190,13 @@
             }
         });
         console.log("submitForm");
+    }
+
+    function isEmpty(str) {
+        if (str != null && str.trim().length > 0) {
+            return false;
+        }
+        return true;
     }
 </script>
 </body>
