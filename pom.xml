@@ -66,6 +66,12 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <!-- 文件名以及输出路径-->
+                <configuration>
+                    <finalName>translate-${project.artifactId}</finalName>
+                    <!--相对于根目录-->
+                    <outputDirectory>./docker</outputDirectory>
+                </configuration>
             </plugin>
         </plugins>
     </build>
